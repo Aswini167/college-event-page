@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Northview College Events</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background:#f4f4f4;
+}
+
+
+header{
+    background:#0f2a44;
+    color:white;
+    padding:15px;
+}
+.header-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+nav a{
+    color:white;
+    margin:0 12px;
+    text-decoration:none;
+    font-weight:bold;
+}
+.filters{
+    margin-top:10px;
+}
+.filters input,.filters select{
+    padding:6px;
+    margin-right:10px;
+}
+
+
+.container{
+    padding:20px;
+}
+.event-card{
+    background:white;
+    padding:15px;
+    margin-bottom:15px;
+    border-radius:6px;
+    box-shadow:0 0 6px rgba(0,0,0,0.1);
+}
+.event-card h3{
+    margin:0;
+    color:#0f2a44;
+}
+.event-card button{
+    margin-top:8px;
+    padding:6px 12px;
+    background:#0f2a44;
+    color:white;
+    border:none;
+    border-radius:4px;
+}
+
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+.pagination button{
+    padding:6px 12px;
+    margin:5px;
+}
+
+footer{
+    background:#111;
+    color:white;
+    text-align:center;
+    padding:15px;
+}
+footer a{
+    color:#4da6ff;
+    margin:0 8px;
+    text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+
+<header>
+    <div class="header-row">
+        <h2> Northview College</h2>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Events</a>
+            <a href="#">Admissions</a>
+            <a href="#">Contact</a>
+        </nav>
+    </div>
+
+    <div class="filters">
+        <input type="text" id="search" placeholder="Search event title">
+        <select id="category">
+            <option value="All">All Categories</option>
+            <option value="Sports">Sports</option>
+            <option value="Workshop">Workshop</option>
+            <option value="Lecture">Lecture</option>
+        </select>
+
+        <select id="dateFilter">
+            <option value="All">All Dates</option>
+            <option value="Today">Today</option>
+            <option value="Week">This Week</option>
+        </select>
+    </div>
+</header>
+
+<div class="container" id="eventList"></div>
+
+
+<div class="pagination">
+    <button onclick="prevPage()">Previous</button>
+    <span id="pageInfo"></span>
+    <button onclick="nextPage()">Next</button>
+</div>
+
+<footer>
+    <p>
+        <a href="#">LinkedIn</a> |
+        <a href="#">Facebook</a> |
+        <a href="#">Twitter</a>
+    </p>
+    <p>+91 9876543210 | ✉ info@northviewcollege.edu</p>
+</footer>
+
+<script>
+
+const events = [
+ {title:"Football Match", category:"Sports", date:"2026-02-05", desc:"Inter-college tournament"},
+ {title:"AI Workshop", category:"Workshop", date:"2026-02-06", desc:"Hands-on AI training"},
+ {title:"Guest Lecture", category:"Lecture", date:"2026-02-07", desc:"Talk by industry expert"},
+ {title:"Basketball Tryouts", category:"Sports", date:"2026-02-08", desc:"Team selection"},
+ {title:"Web Development Workshop", category:"Workshop", date:"2026-02-09", desc:"HTML, CSS, JS"},
+ {title:"Startup Seminar", category:"Lecture", date:"2026-02-10", desc:"Entrepreneurship basics"}
+];
+
+let currentPage = 1;
+let perPage = 3;
+
+
+function displayEvents(){
+    const list = document.getElementById("eventList");
+    list.innerHTML = "";
+
+    const search = document.getElementById("search").value.toLowerCase();
+    const category = document.getElementById("category").value;
+    const dateFilter = document.getElementById("dateFilter").value;
